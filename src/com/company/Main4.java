@@ -27,9 +27,9 @@ public class Main4 {
         list.add("c");
 
 
-        Iterator<String> iterator = a.iterator();
+        Iterator<String> iterator = list.iterator();
         while (Iterator.hasNext()) {
-            System.out.println(iterator);
+            System.out.println(iterator.next());
         }
 >>>>>>> 5bd93b2 (second commit)
 
