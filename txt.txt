@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 updated text
+=======
+143
+>>>>>>> 1ce8eb2 (first task)
