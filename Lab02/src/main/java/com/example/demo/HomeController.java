@@ -12,10 +12,12 @@ public class HomeController {
         return "index";
     }
 
-
     @RequestMapping("/example")
     @ResponseBody
     public String hello() {
         return "Hello World!";
+
     }
+
+
 }
