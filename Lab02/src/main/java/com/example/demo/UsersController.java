@@ -51,12 +51,14 @@ public class UsersController {
         return usersMap;
     }
 
-    @RequestMapping("/user/add")
+    //Add user
+    @RequestMapping("/users/add")
     @ResponseBody
     public Object AddUser(
-            @PathVariable Long id
-    ){
-        usersMap.put(id, new UserEntity(id, "Karol"));
-        return usersMap.put(id, new UserEntity(id, "Karol"));
+            @RequestParam Long id,
+            @RequestParam String name
+    ) {
+        usersMap.put(id, new UserEntity(id, name));
+        return "name of the added user: " + name;
     }
 }
