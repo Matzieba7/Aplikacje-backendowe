@@ -20,16 +20,16 @@ public class UsersController {
 
     @PostConstruct
     private void onCreate() {
-        usersMap.put(1L, new UserEntity(1L, "Karol"));
-        usersMap.put(2L, new UserEntity(2L, "Marek"));
-        usersMap.put(3L, new UserEntity(3L, "Roman"));
+        usersMap.put(1L, new UserEntity(1L, "Karol", "karol1234@mail.com"));
+        usersMap.put(2L, new UserEntity(2L, "Marek", "SuperMarek@poczta.pl"));
+        usersMap.put(3L, new UserEntity(3L, "Roman", "piesNaBaby211@transformers.gov"));
     }
 
 
     @RequestMapping("/users")
     @ResponseBody
     public Object getUsers(){
-        return usersMap.values();
+        return usersMap;
     }
 
 
@@ -56,9 +56,14 @@ public class UsersController {
     @ResponseBody
     public Object AddUser(
             @RequestParam Long id,
-            @RequestParam String name
+            @RequestParam String name,
+            @RequestParam String email
     ) {
-        usersMap.put(id, new UserEntity(id, name));
+        usersMap.put(id, new UserEntity(id, name, email));
         return "name of the added user: " + name;
     }
+
+
+
+    
 }

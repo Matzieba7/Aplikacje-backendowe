@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+
+    body {
+    	height: 400px;  /* <---------------- remove it in your web page              */
+    }
+
+    div.layout {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    div.header {
+        flex: 0.1;  /* <-------------------- change it to get higher header and logo */
+        min-height: 0;
+        display: flex;
+    }
+
+    img.logo {
+
+    }
+
+    div.menu {
+        background: #adadff;
+        flex: 1;
+    }
+
+    div.body {
+        background: orange;
+        flex: 1;
+    }
+
+  </style>
+</head>
+<body>
+<div class="layout">
+    <div class="header">
+        <img class="logo" src="/static/bucket/1631898942509-VMYrnXyYZv--image.png" alt="dirask-logo" />
+        <div class="menu">Menu here ...</div>
+
+    </div>
+    <div class="body">
+        Body here ...
+        <img src="kot jpeg.jpg" />
+    </div>
+</div>
+</body>
+</html>
