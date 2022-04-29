@@ -1,69 +1,84 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.catalina.User;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@Controller
+@RestController
 public class UsersController {
 
-    private final Map<Long, UserEntity> usersMap = new HashMap<>();
+    private static final int PAGE_NUMBER = 1;
+    private static final int PAGE_SIZE = 2;
+
+    private final List<UserEntity> users = new LinkedList<>();
+
 
     @PostConstruct
-    private void onCreate() {
-        usersMap.put(1L, new UserEntity(1L, "Karol", "karol1234@mail.com"));
-        usersMap.put(2L, new UserEntity(2L, "Marek", "SuperMarek@poczta.pl"));
-        usersMap.put(3L, new UserEntity(3L, "Roman", "piesNaBaby211@transformers.gov"));
+    private void Create() {
+        users.add(new UserEntity(1L, "Adam", "admam1234@wsei.pl"));
+        users.add(new UserEntity(2L, "Robert", "RobertJazda@joł.com"));
+        users.add(new UserEntity(3L, "Karol", "marol@gmail.wsei.gov"));
     }
 
 
-    @RequestMapping("/users")
-    @ResponseBody
-    public Object getUsers(){
-        return usersMap;
-    }
-
-
-    @RequestMapping("/users/{id}/get")
-    @ResponseBody
-    public Object getUserById(
+    @RequestMapping("/users/{id}")
+    public UserEntity GetUserById(
             @PathVariable Long id
-    ){
-        return usersMap.get(id);
-    }
-
-
-    @RequestMapping("/users/{id}/remove")
-    @ResponseBody
-    public Object RemoveUser(
-            @PathVariable Long id
-    ){
-        usersMap.remove(id);
-        return usersMap;
-    }
-
-    //Add user
-    @RequestMapping("/users/add")
-    @ResponseBody
-    public Object AddUser(
-            @RequestParam Long id,
-            @RequestParam String name,
-            @RequestParam String email
     ) {
-        usersMap.put(id, new UserEntity(id, name, email));
-        return "name of the added user: " + name;
+        return users.stream()
+                .filter(userEntity -> userEntity.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new UserNotFoundException("User not found: " + id));
     }
 
 
+    @GetMapping("/users")
+    public UsersResults GetUsers(@RequestParam(name = "page number", required = false) Integer pageNumberParam,
+                           @RequestParam(name = "page size", required = false) Integer pageSizeParam) {
+        int pageNumber = pageNumberParam != null ? pageNumberParam : PAGE_NUMBER;
+        int pageSize = pageSizeParam != null ? pageSizeParam : PAGE_SIZE;
+        int offset = (pageNumber - 1) * pageSize;
+        return new UsersResults(pageNumber, users.size() / pageSize, pageSize, users.size(),
+                subList(users, offset, pageSize));
+    }
 
-    
+    public static <T> List<T> subList(List<T> it, int offset, int limit) {
+        if (it == null) {
+            return it;
+        }
+        if (it.size() <= offset) {
+            return Collections.emptyList();
+        }
+        if (limit < 0) {
+            limit = it.size();
+        }
+        if (offset < 0) {
+            offset = 0;
+        }
+        limit = offset + limit > it.size() ? it.size() - offset : limit;
+        return (limit == it.size() && offset == 0) ? it : it.subList(offset, offset + limit);
+    }
+
+
+    @DeleteMapping("/users/{id}")
+    public Boolean RemoveUserById(
+            @PathVariable Long id
+    ) {
+        UserEntity userEntity = users.stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new UserNotFoundException("Not found user for given id " + id));
+        return users.remove(userEntity);
+    }
+
+    //  curl -X POST -d '{"id":4, "name":"dupa", "email":"dupa@dupa.pl"}' -H 'Content-Type: application/json'  http://localhost:8080/user/create
+    @PostMapping("/user/create")
+    public UserEntity CreateUser(@RequestBody UserEntity userEntity){
+        users.add(userEntity);
+        return userEntity;
+
+    }
+
 }
