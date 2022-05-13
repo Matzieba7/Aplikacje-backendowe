@@ -81,4 +81,11 @@ public class UsersController {
 
     }
 
+    @PostMapping("/user/remove")
+    public UserEntity RemoveUser(@RequestBody UserEntity userEntity){
+        users.remove(userEntity);
+        return userEntity;
+
+    }
+
 }
