@@ -1,11 +1,12 @@
 Prosta aplikacja do zarządzania systemem bibliotecznym
 
 
-Utworzenie podstawy aplikacji Spring przy pomocy generatora +
-opracowanie modelu bazy danych
-stworzenie klas odpowiadajacym tabelom z bazy danych (student, )
-warstwa API
-dodanie flyway do projektu 
+Utworzenie podstawy aplikacji Spring przy pomocy generatora
+opracowanie modelu bazy danych 
+stworzenie klas odpowiadajacym tabelom z bazy danych 
+utworzenie kontrolerów
+utworzenie serwisów
+implementacja Dependency Injection
 utworzenie bazy danych oraz tabeli - postgre SQL
 utworzenie encji w projekcie na podstawie bazy danych
 przygotwanie mikroserwisu userów
