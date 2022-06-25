@@ -1,9 +1,8 @@
 Prosta aplikacja do zarządzania systemem bibliotecznym
 
-
-Utworzenie podstawy aplikacji Spring przy pomocy generatora
-opracowanie modelu bazy danych 
-stworzenie klas odpowiadajacym tabelom z bazy danych 
+1. Utworzenie repozytorium projektu
+2. Utworzenie podstawy aplikacji Spring Boot przy pomocy generatora
+3.
 utworzenie kontrolerów
 utworzenie serwisów
 implementacja Dependency Injection
