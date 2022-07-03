@@ -16,18 +16,18 @@ public class UserRepository {
     JdbcTemplate jdbcTemplate;
 
     public List<User> getAll(){
-        return jdbcTemplate.query("SELECT id, name, surname, dateOfBirth, typeID FROM user", BeanPropertyRowMapper.newInstance(User.class));
+        return jdbcTemplate.query("SELECT id, username, password, dateOfBirth, typeID FROM user", BeanPropertyRowMapper.newInstance(User.class));
     }
 
     public User getByid(int id){
-        return jdbcTemplate.queryForObject("SELECT id, name, surname, dateOfBirth, typeID FROM book WHERE " + "id = ?", BeanPropertyRowMapper.newInstance(User.class), id);
+        return jdbcTemplate.queryForObject("SELECT id, username, password, dateOfBirth, typeID FROM book WHERE " + "id = ?", BeanPropertyRowMapper.newInstance(User.class), id);
     }
 
 
     public int save(List<User> users) {
         users.forEach(user -> jdbcTemplate
-                .update("INSERT INTO user(name, surname, dateOfBirth, email, typeID) VALUES(?,?,?,?,?)",
-                        user.getName(), user.getSurname(), user.getDateOfBirth(), user.getEmail(), user.getTypeID()
+                .update("INSERT INTO user(username, password, dateOfBirth, email, typeID) VALUES(?,?,?,?,?)",
+                        user.getUsername(), user.getPassword(), user.getDateOfBirth(), user.getEmail(), user.getTypeID()
                 ));
 
         return 1;
@@ -35,8 +35,8 @@ public class UserRepository {
 
     public int update(User user)
     {
-        return jdbcTemplate.update("UPDATE user SET name=?, surname =?, dateOfBirth=?, email =?, typeId=? WHERE id=?",
-                user.getName(), user.getSurname(), user.getDateOfBirth(), user.getEmail(), user.getTypeID());
+        return jdbcTemplate.update("UPDATE user SET name=?, password =?, dateOfBirth=?, email =?, typeId=? WHERE id=?",
+                user.getUsername(), user.getPassword(), user.getDateOfBirth(), user.getEmail(), user.getTypeID());
     }
 
     public int delete(int id)

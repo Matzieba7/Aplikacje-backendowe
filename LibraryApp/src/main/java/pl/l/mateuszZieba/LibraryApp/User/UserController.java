@@ -36,11 +36,12 @@ public class UserController {
         User user = userRepository.getByid(id);
 
         if(user != null) {
-            user.setName(updatedUser.getName());
-            user.setSurname(updatedUser.getSurname());
+            user.setUsername(updatedUser.getUsername());
+            user.setPassword(updatedUser.getPassword());
             user.setDateOfBirth(updatedUser.getDateOfBirth());
             user.setEmail(updatedUser.getEmail());
             user.setTypeID(updatedUser.getTypeID());
+
 
             userRepository.update(user);
             return 1;
@@ -54,8 +55,8 @@ public class UserController {
         User user = userRepository.getByid(id);
 
         if(user != null){
-            if (updatedUser.getName() != null) user.setName(updatedUser.getName());
-            if (updatedUser.getSurname() != null) user.setSurname(updatedUser.getSurname());
+            if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
+            if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
             if (updatedUser.getDateOfBirth() != null) user.setDateOfBirth(updatedUser.getDateOfBirth());
             if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
             if (updatedUser.getTypeID() > 0) user.setTypeID(updatedUser.getTypeID());
